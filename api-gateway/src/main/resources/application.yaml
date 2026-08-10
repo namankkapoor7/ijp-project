@@ -4,24 +4,26 @@ server:
 spring:
   application:
     name: api-gateway
+
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: false
-      routes:
-        - id: candidate-service
-          uri: lb://candidate-service
-          predicates:
-            - Path=/api/candidates/**
-        - id: job-service
-          uri: lb://job-service
-          predicates:
-            - Path=/api/jobs/**
-        - id: admin-service
-          uri: lb://admin-service
-          predicates:
-            - Path=/api/admin/**
+      server:
+        webmvc:
+          routes:
+            - id: candidate-service
+              uri: lb://candidate-service
+              predicates:
+                - Path=/api/candidates/**
+
+            - id: job-service
+              uri: lb://job-service
+              predicates:
+                - Path=/api/jobs/**
+
+            - id: admin-service
+              uri: lb://admin-service
+              predicates:
+                - Path=/api/admin/**
 
 eureka:
   client:
