@@ -1,5 +1,7 @@
 package com.ijp.jobservice.service;
 
+import com.ijp.jobservice.client.CandidateClient;
+import com.ijp.jobservice.dto.CandidateSummaryDTO;
 import com.ijp.jobservice.dto.JobPostingRequestDTO;
 import com.ijp.jobservice.dto.JobPostingResponseDTO;
 import com.ijp.jobservice.entity.Designation;
@@ -26,6 +28,9 @@ public class JobPostingService {
 
     @Autowired
     private JobPostingMapper mapper;
+
+    @Autowired
+    private CandidateClient candidateClient;
 
     public JobPostingResponseDTO createJobPosting(JobPostingRequestDTO requestDTO) {
         Designation designation = designationRepository.findById(requestDTO.getDesignationId())
@@ -90,6 +95,17 @@ public class JobPostingService {
         job.setStatus("CLOSED");
         JobPosting saved = jobPostingRepository.save(job);
         return mapper.toResponseDTO(saved);
+    }
+
+    public List<CandidateSummaryDTO> getCandidatesForJob(Long jobId) {
+        jobPostingRepository.findById(jobId)
+                .orElseThrow(() -> new IllegalArgumentException("Job posting not found with id: " + jobId));
+
+        try {
+            return candidateClient.getCandidatesByJob(jobId);
+        } catch (Exception ex) {
+            throw new IllegalStateException("Unable to reach candidate service. Please try again later.");
+        }
     }
 
     private String generateJobCode() {

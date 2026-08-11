@@ -1,5 +1,6 @@
 package com.ijp.jobservice.controller;
 
+import com.ijp.jobservice.dto.CandidateSummaryDTO;
 import com.ijp.jobservice.dto.JobPostingRequestDTO;
 import com.ijp.jobservice.dto.JobPostingResponseDTO;
 import com.ijp.jobservice.service.JobPostingService;
@@ -45,8 +46,19 @@ public class JobPostingController {
         return ResponseEntity.ok(jobPostingService.closeJobPosting(id));
     }
 
+    @GetMapping("/{id}/candidates")
+    public ResponseEntity<List<CandidateSummaryDTO>> getCandidatesForJob(@PathVariable Long id) {
+        return ResponseEntity.ok(jobPostingService.getCandidatesForJob(id));
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleNotFound(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleServiceUnavailable(IllegalStateException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ex.getMessage());
+    }
+
 }
