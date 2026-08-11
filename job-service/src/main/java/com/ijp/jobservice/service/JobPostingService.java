@@ -1,5 +1,6 @@
 package com.ijp.jobservice.service;
 
+import com.ijp.jobservice.dto.JobApplicationNotificationDTO;
 import com.ijp.jobservice.client.CandidateClient;
 import com.ijp.jobservice.dto.CandidateSummaryDTO;
 import com.ijp.jobservice.dto.JobPostingRequestDTO;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -103,6 +105,43 @@ public class JobPostingService {
 
         try {
             return candidateClient.getCandidatesByJob(jobId);
+        } catch (Exception ex) {
+            throw new IllegalStateException("Unable to reach candidate service. Please try again later.");
+        }
+    }
+
+    public List<JobApplicationNotificationDTO> getUnseenApplicationNotifications() {
+        List<JobPosting> allJobs = jobPostingRepository.findAll();
+        List<JobApplicationNotificationDTO> notifications = new ArrayList<>();
+
+        for (JobPosting job : allJobs) {
+            try {
+                int currentCount = candidateClient.getCandidatesByJob(job.getId()).size();
+                int lastSeen = job.getLastSeenApplicantCount() == null ? 0 : job.getLastSeenApplicantCount();
+
+                if (currentCount > lastSeen) {
+                    JobApplicationNotificationDTO dto = new JobApplicationNotificationDTO();
+                    dto.setJobId(job.getId());
+                    dto.setJobCode(job.getJobCode());
+                    dto.setUnseenCount(currentCount - lastSeen);
+                    notifications.add(dto);
+                }
+            } catch (Exception ex) {
+                // candidate-service unreachable for this job — skip it rather than fail the whole dashboard
+            }
+        }
+
+        return notifications;
+    }
+
+    public void markApplicationsSeen(Long jobId) {
+        JobPosting job = jobPostingRepository.findById(jobId)
+                .orElseThrow(() -> new IllegalArgumentException("Job posting not found with id: " + jobId));
+
+        try {
+            int currentCount = candidateClient.getCandidatesByJob(jobId).size();
+            job.setLastSeenApplicantCount(currentCount);
+            jobPostingRepository.save(job);
         } catch (Exception ex) {
             throw new IllegalStateException("Unable to reach candidate service. Please try again later.");
         }

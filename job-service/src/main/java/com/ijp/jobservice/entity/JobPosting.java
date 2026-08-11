@@ -46,6 +46,9 @@ public class JobPosting {
     @Column(nullable = false)
     private LocalDate postedDate;
 
+    @Column(nullable = false)
+    private Integer lastSeenApplicantCount = 0;
+
     public JobPosting() {
     }
 
@@ -144,4 +147,13 @@ public class JobPosting {
     public void setPostedDate(LocalDate postedDate) {
         this.postedDate = postedDate;
     }
+
+    public Integer getLastSeenApplicantCount() {
+        return lastSeenApplicantCount;
+    }
+
+    public void setLastSeenApplicantCount(Integer lastSeenApplicantCount) {
+        this.lastSeenApplicantCount = lastSeenApplicantCount;
+    }
+
 }

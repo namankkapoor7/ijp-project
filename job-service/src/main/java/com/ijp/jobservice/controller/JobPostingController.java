@@ -1,5 +1,6 @@
 package com.ijp.jobservice.controller;
 
+import com.ijp.jobservice.dto.JobApplicationNotificationDTO;
 import com.ijp.jobservice.dto.CandidateSummaryDTO;
 import com.ijp.jobservice.dto.JobPostingRequestDTO;
 import com.ijp.jobservice.dto.JobPostingResponseDTO;
@@ -49,6 +50,17 @@ public class JobPostingController {
     @GetMapping("/{id}/candidates")
     public ResponseEntity<List<CandidateSummaryDTO>> getCandidatesForJob(@PathVariable Long id) {
         return ResponseEntity.ok(jobPostingService.getCandidatesForJob(id));
+    }
+
+    @GetMapping("/notifications/unseen-applications")
+    public ResponseEntity<List<JobApplicationNotificationDTO>> getUnseenApplications() {
+        return ResponseEntity.ok(jobPostingService.getUnseenApplicationNotifications());
+    }
+
+    @PutMapping("/{id}/notifications/mark-seen")
+    public ResponseEntity<Void> markSeen(@PathVariable Long id) {
+        jobPostingService.markApplicationsSeen(id);
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
