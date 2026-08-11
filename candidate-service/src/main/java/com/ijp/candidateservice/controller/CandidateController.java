@@ -39,4 +39,15 @@ public class CandidateController {
     public ResponseEntity<String> handleDuplicateApplication(IllegalStateException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleNotFound(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(com.ijp.candidateservice.exception.ServiceUnavailableException.class)
+    public ResponseEntity<String> handleServiceUnavailable(com.ijp.candidateservice.exception.ServiceUnavailableException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ex.getMessage());
+    }
+
 }
