@@ -1,1 +1,51 @@
-<p>admin-dashboard works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Admin Dashboard</h2>
+    <div>
+      <a routerLink="/admin/add-job" class="btn btn-primary btn-sm me-2">Add Job</a>
+      <button class="btn btn-outline-secondary btn-sm" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="loading" class="text-muted">Loading postings...</div>
+
+  <table class="table" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>Job Code</th>
+        <th>Designation</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>Applicants</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let job of jobs">
+        <td>{{ job.jobCode }}</td>
+        <td>{{ job.designationTitle }}</td>
+        <td>{{ job.location }}</td>
+        <td>
+          <span class="badge" [class.bg-success]="job.status === 'OPEN'" [class.bg-secondary]="job.status === 'CLOSED'">
+            {{ job.status }}
+          </span>
+        </td>
+        <td>
+          <a [routerLink]="['/admin/candidates', job.id]">View</a>
+          <span *ngIf="unseenCountFor(job.id) > 0" class="badge bg-danger ms-1">
+            {{ unseenCountFor(job.id) }} new
+          </span>
+        </td>
+        <td>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            *ngIf="job.status === 'OPEN'"
+            (click)="closeJob(job.id)">
+            Close
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

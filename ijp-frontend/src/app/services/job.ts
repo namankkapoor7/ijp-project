@@ -95,4 +95,8 @@ export class Job {
   markApplicationsSeen(jobId: number): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${jobId}/notifications/mark-seen`, {});
   }
+
+  getAllJobsForAdmin(): Observable<JobPostingResponse[]> {
+    return this.http.get<JobPostingResponse[]>(`${this.baseUrl}/admin/all`);
+  }
 }
