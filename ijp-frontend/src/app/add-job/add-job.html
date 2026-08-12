@@ -1,1 +1,62 @@
-<p>add-job works!</p>
+<div class="container mt-4" style="max-width: 600px;">
+  <h2>Add Job Posting</h2>
+
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <form *ngIf="!successMessage" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea class="form-control" rows="3" [(ngModel)]="description" name="description" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Designation</label>
+      <select class="form-select" [(ngModel)]="designationId" name="designationId" required>
+        <option [ngValue]="null" disabled>Select a designation</option>
+        <option *ngFor="let d of designations" [ngValue]="d.id">{{ d.title }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3 d-flex gap-2">
+      <input type="text" class="form-control" placeholder="New designation title" [(ngModel)]="newDesignationTitle" name="newDesignationTitle">
+      <button type="button" class="btn btn-outline-secondary" (click)="addDesignation()">Add</button>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Location</label>
+      <input type="text" class="form-control" [(ngModel)]="location" name="location" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Required Skill Set</label>
+      <input type="text" class="form-control" placeholder="e.g. Java, Spring Boot, MySQL" [(ngModel)]="skillSet" name="skillSet" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Years of Experience</label>
+      <input type="number" class="form-control" [(ngModel)]="experienceYears" name="experienceYears" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Languages Known</label>
+      <input type="text" class="form-control" placeholder="e.g. English, Hindi" [(ngModel)]="languagesKnown" name="languagesKnown" required>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <label class="form-label">Minimum Salary</label>
+        <input type="number" class="form-control" [(ngModel)]="salaryMin" name="salaryMin" required>
+      </div>
+      <div class="col">
+        <label class="form-label">Maximum Salary</label>
+        <input type="number" class="form-control" [(ngModel)]="salaryMax" name="salaryMax" required>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="submitting">
+      {{ submitting ? 'Posting...' : 'Post' }}
+    </button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onCancel()">Cancel</button>
+  </form>
+</div>
