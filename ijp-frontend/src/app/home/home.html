@@ -1,1 +1,53 @@
-<p>home works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Open Positions</h2>
+    <a routerLink="/admin/login" class="btn btn-outline-secondary btn-sm">Admin Login</a>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-5">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Filter by designation"
+        [(ngModel)]="designationFilter"
+        (ngModelChange)="onFilterChange()">
+    </div>
+    <div class="col-md-5">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Filter by location"
+        [(ngModel)]="locationFilter"
+        (ngModelChange)="onFilterChange()">
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-muted">Loading job postings...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="!loading && jobs.length === 0" class="text-muted">
+    No open positions match your search.
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3" *ngFor="let job of jobs">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ job.designationTitle }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ job.location }} &middot; {{ job.jobCode }}</h6>
+          <p class="card-text">{{ job.description }}</p>
+          <p class="card-text">
+            <small class="text-muted">
+              {{ job.experienceYears }}+ yrs &middot; {{ job.skillSet }}
+            </small>
+          </p>
+          <p class="card-text">
+            <strong>&#8377;{{ job.salaryMin | number }} - &#8377;{{ job.salaryMax | number }}</strong>
+          </p>
+          <a [routerLink]="['/register', job.id]" class="btn btn-primary">Apply</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
