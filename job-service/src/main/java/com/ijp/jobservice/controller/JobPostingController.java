@@ -63,6 +63,11 @@ public class JobPostingController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/admin/all")
+    public ResponseEntity<List<JobPostingResponseDTO>> getAllForAdmin() {
+        return ResponseEntity.ok(jobPostingService.getAllJobPostingsForAdmin());
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleNotFound(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());

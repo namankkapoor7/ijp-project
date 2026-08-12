@@ -134,6 +134,13 @@ public class JobPostingService {
         return notifications;
     }
 
+    public List<JobPostingResponseDTO> getAllJobPostingsForAdmin() {
+        return jobPostingRepository.findAll()
+                .stream()
+                .map(mapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
     public void markApplicationsSeen(Long jobId) {
         JobPosting job = jobPostingRepository.findById(jobId)
                 .orElseThrow(() -> new IllegalArgumentException("Job posting not found with id: " + jobId));
