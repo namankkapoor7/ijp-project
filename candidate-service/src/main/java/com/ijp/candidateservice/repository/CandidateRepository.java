@@ -10,4 +10,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     List<Candidate> findByJobId(Long jobId);
 
     boolean existsByEmailAndJobId(String email, Long jobId);
+
+    boolean existsByEmployeeIdAndJobId(String employeeId, Long jobId);
 }

@@ -32,10 +32,12 @@ public class CandidateService {
         validateJobIsOpen(requestDTO.getJobId());
 
         boolean alreadyApplied = candidateRepository.existsByEmailAndJobId(
-                requestDTO.getEmail(), requestDTO.getJobId());
+                requestDTO.getEmail(), requestDTO.getJobId())
+                || candidateRepository.existsByEmployeeIdAndJobId(
+                requestDTO.getEmployeeId(), requestDTO.getJobId());
 
         if (alreadyApplied) {
-            throw new IllegalStateException("This email has already applied for this job");
+            throw new IllegalStateException("This employee has already applied for this job");
         }
 
         Candidate candidate = candidateMapper.toEntity(requestDTO);
