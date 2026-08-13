@@ -1,12 +1,285 @@
-body {
-  background-color: #f8f9fa;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+:root {
+  --ijp-primary: #4f46e5;
+  --ijp-primary-dark: #4338ca;
+  --ijp-accent: #10b981;
+  --ijp-danger: #ef4444;
+  --ijp-bg: #f4f6fb;
+  --ijp-surface: #ffffff;
+  --ijp-text: #1e2433;
+  --ijp-text-muted: #6b7280;
+  --ijp-border: #e5e7eb;
+  --ijp-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+  --ijp-shadow-hover: 0 10px 30px rgba(15, 23, 42, 0.12);
+
+  --bs-primary: var(--ijp-primary);
+  --bs-primary-rgb: 79, 70, 229;
+  --bs-secondary: #64748b;
+  --bs-secondary-rgb: 100, 116, 139;
+  --bs-success: var(--ijp-accent);
+  --bs-success-rgb: 16, 185, 129;
+  --bs-danger: var(--ijp-danger);
+  --bs-danger-rgb: 239, 68, 68;
+  --bs-border-radius: 10px;
+  --bs-border-radius-sm: 8px;
+  --bs-border-radius-lg: 14px;
+  --bs-body-bg: var(--ijp-bg);
+  --bs-body-color: var(--ijp-text);
+  --bs-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--ijp-bg);
+  color: var(--ijp-text);
+  font-family: var(--bs-font-sans-serif);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Top brand bar ---------- */
+
+.ijp-topbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  background: linear-gradient(135deg, var(--ijp-primary), var(--ijp-primary-dark));
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  box-shadow: var(--ijp-shadow);
+  margin-bottom: 0.75rem;
+}
+
+.ijp-topbar .ijp-topbar-sub {
+  font-weight: 400;
+  opacity: 0.85;
+  font-size: 0.78rem;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  font-weight: 600;
+  border-radius: var(--bs-border-radius);
+  padding: 0.5rem 1.1rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-primary {
+  border: none;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
+}
+
+.btn-outline-secondary {
+  border-color: var(--ijp-border);
+  color: var(--ijp-text-muted);
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f1f2f6;
+  color: var(--ijp-text);
+  border-color: var(--ijp-border);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: #f1f2f6;
+  border: none;
+  color: var(--ijp-text-muted);
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+  color: var(--ijp-text);
+}
+
+.btn-sm {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- Cards ---------- */
+
 .card {
-  transition: box-shadow 0.15s ease-in-out;
+  border: none;
+  border-radius: var(--bs-border-radius-lg);
+  box-shadow: var(--ijp-shadow);
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 .card:hover {
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+  box-shadow: var(--ijp-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-weight: 700;
+  color: var(--ijp-text);
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+}
+
+/* ---------- Auth / form cards (login, register, add-job) ---------- */
+
+.ijp-form-card {
+  background: var(--ijp-surface);
+  border-radius: var(--bs-border-radius-lg);
+  box-shadow: var(--ijp-shadow);
+  padding: 2.25rem;
+  max-width: 520px;
+  margin: 2.5rem auto;
+}
+
+.ijp-form-card h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* ---------- Form controls ---------- */
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ijp-text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.form-control,
+.form-select {
+  border: 1.5px solid var(--ijp-border);
+  border-radius: var(--bs-border-radius-sm);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ijp-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.form-control::placeholder {
+  color: #9ca3af;
+}
+
+/* ---------- Badges ---------- */
+
+.badge {
+  font-weight: 600;
+  padding: 0.4em 0.75em;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Alerts ---------- */
+
+.alert {
+  border: none;
+  border-radius: var(--bs-border-radius);
+  font-weight: 500;
+  padding: 0.85rem 1.1rem;
+}
+
+.alert-danger {
+  background-color: #fef2f2;
+  color: #b91c1c;
+}
+
+.alert-success {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.alert-info {
+  background-color: #eef2ff;
+  color: #3730a3;
+}
+
+/* ---------- Tables (Admin dashboard, candidate list) ---------- */
+
+.table {
+  background: var(--ijp-surface);
+  border-radius: var(--bs-border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--ijp-shadow);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead th {
+  background-color: #f8f9fc;
+  color: var(--ijp-text-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  border-bottom: 1px solid var(--ijp-border);
+  padding: 0.9rem 1rem;
+}
+
+.table tbody td {
+  padding: 0.9rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f2f6;
+  font-size: 0.92rem;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: #fafbff;
+}
+
+/* ---------- Inputs used as filters ---------- */
+
+input[placeholder^="Filter"] {
+  background-color: var(--ijp-surface);
+}
+
+/* ---------- Spinner ---------- */
+
+.spinner-border {
+  color: var(--ijp-primary);
+}
+
+/* ---------- Misc ---------- */
+
+.container {
+  max-width: 1100px;
+}
+
+a {
+  color: var(--ijp-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  color: var(--ijp-primary-dark);
+  text-decoration: underline;
 }
