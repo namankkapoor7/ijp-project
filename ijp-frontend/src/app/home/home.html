@@ -1,4 +1,8 @@
 <div class="container mt-4">
+  <div class="mb-2">
+    <span class="badge bg-primary">IJP</span>
+    <span class="text-muted small ms-1">Internal Recruitment System</span>
+  </div>
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Open Positions</h2>
     <a routerLink="/admin/login" class="btn btn-outline-secondary btn-sm">Admin Login</a>
@@ -23,7 +27,10 @@
     </div>
   </div>
 
-  <div *ngIf="loading" class="text-muted">Loading job postings...</div>
+  <div *ngIf="loading" class="d-flex align-items-center text-muted mb-3">
+    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+    Loading job postings...
+  </div>
   <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
   <div *ngIf="!loading && jobs.length === 0" class="text-muted">

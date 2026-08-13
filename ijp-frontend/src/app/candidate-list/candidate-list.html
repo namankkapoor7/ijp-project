@@ -3,7 +3,10 @@
 
   <h2 *ngIf="job">Applicants for {{ job.designationTitle }} ({{ job.jobCode }})</h2>
 
-  <div *ngIf="loading" class="text-muted">Loading candidates...</div>
+  <div *ngIf="loading" class="d-flex align-items-center text-muted mb-3">
+    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+    Loading candidates...
+  </div>
   <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
   <div *ngIf="!loading && !errorMessage && candidates.length === 0" class="text-muted">
