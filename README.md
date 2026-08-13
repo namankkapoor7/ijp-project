@@ -53,7 +53,6 @@ The system covers candidate registration and job application, HR (Admin) authent
 | Database | MySQL (one schema per service) | Persistent storage — Database-per-Service pattern |
 | Data Contracts | DTOs (Data Transfer Objects) | Decouple internal entities from API request/response shapes |
 | Build Tools | Maven (backend), npm (frontend) | Dependency management and build lifecycle |
-| Containerization | Docker | Each microservice packaged as an independent container image |
 | Version Control | Git & GitHub | Source control and collaboration |
 | Design | UML (Class, Sequence, ER diagrams) | System design documentation |
 
@@ -389,26 +388,22 @@ ng serve
 
 Client runs at `http://localhost:4200` and calls the backend through the Gateway at `http://localhost:8080`.
 
-### 4. (Optional) Run with Docker
-
-Build and run each service as its own container image, exposing the ports listed in [Deployment View](#deployment-view). MySQL schemas must be reachable by each container (e.g., via a shared Docker network or external MySQL host).
-
 ## Deployment View
 
-| Component | Default Port | Container |
-|---|---|---|
-| Eureka Server | 8761 | eureka-server image |
-| API Gateway | 8080 | api-gateway image |
-| Candidate Service | 8081 | candidate-service image |
-| Job Posting Service | 8082 | job-service image |
-| Admin Service | 8083 | admin-service image |
-| Angular Client | 4200 | served via `ng serve` / static build |
+| Component | Default Port |
+|---|---|
+| Eureka Server | 8761 |
+| API Gateway | 8080 |
+| Candidate Service | 8081 |
+| Job Posting Service | 8082 |
+| Admin Service | 8083 |
+| Angular Client | 4200 (served via `ng serve` / static build) |
 
 ## Future Enhancements
 
 These are explicitly **out of current scope** — documented here so the boundary of the current build is clear:
 
-- Container orchestration with Kubernetes for scaling and self-healing.
+- Containerization with Docker (each service packaged as an independent image), followed by orchestration with Kubernetes for scaling and self-healing.
 - CI/CD pipeline (Git + Jenkins) for automated build and deployment.
 - Centralized logging and monitoring (e.g., ELK stack, Grafana).
 - Email/SMS integration for real application notifications (replacing the current in-app "unseen applications" flag).
